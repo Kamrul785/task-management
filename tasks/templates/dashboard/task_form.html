@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="w-1/2 mx-auto mt-8 ">
+        <div>
+            {% if message %}
+            {{ message }}
+            {% endif %}
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="bg-rose-600 mt-2 px-3 py-3 rounded-md text-white">Submit</button>
+        </form>
+    </div>
+  </body>
+</html>
