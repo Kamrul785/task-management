@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task
+from tasks.models import Task , TaskDetail
 
 # Django Form 
 class TaskForm(forms.Form):
@@ -17,7 +17,7 @@ class TaskForm(forms.Form):
 
 class StyledFormMixin:
     """ Mixing to apply styles to form fields"""
-    default_classes = "border-2 border-gray-300 shadow-md w-full rounded-lg focus:border-rose-300 focus:ring-rose-500 px-3"
+    default_classes = "border-2 border-gray-300 shadow-md w-full rounded-lg focus:border-rose-300 focus:ring-rose-500 p-2"
     
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
@@ -40,6 +40,11 @@ class StyledFormMixin:
                 field.widget.attrs.update({
                     'class' : "space-y-2"  
                 })
+            elif isinstance(field.widget,forms.CharField):
+                field.widget.attrs.update({
+                    'class' : "bg-gray-500"  
+                })
+            
     
 
 # Django Model Form 
@@ -53,28 +58,16 @@ class TaskModelForm(StyledFormMixin,forms.ModelForm):
             'assigned_to':forms.CheckboxSelectMultiple
         }
         
-        
-        """ Style mixing use korle ae vabe widgets ar use korte hobe na. redundancy kombe"""
-        '''" Manual widget styling ''' 
-        # widgets = {
-        #     'title':forms.TextInput(attrs={
-        #         'class':"border-2 border-gray-300 shadow-md w-full rounded-lg focus:border-rose-300 focus:ring-rose-500 px-3 h-10",
-        #         'placeholder':"Enter Task Title"
-        #     }),
-        #     'description':forms.Textarea(attrs={
-        #         'class':"border-2 border-gray-300 shadow-md w-full rounded-lg focus:border-rose-300 focus:ring-rose-500 px-3 h-20",
-        #         'placeholder':"Descrip the tast",
-        #         'rows' : 5
-        #     }),
-        #     'due_date':forms.SelectDateWidget(attrs={
-        #         'class':"border-2 border-gray-300 shadow-md rounded-lg focus:border-rose-300 focus:ring-rose-500",
-        #     }),
-        #     'assigned_to':forms.CheckboxSelectMultiple(attrs={
-        #         'class': "space-y-2",
-        #     })
-        # }
-    
     """ Widget using mixing """
+    def __init__(self,  *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styled_widgets()
+        
+class TaskDetailModelForm(StyledFormMixin,forms.ModelForm):
+    class Meta:
+        model = TaskDetail
+        fields = ['priority' , 'notes']
+        
     def __init__(self,  *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
