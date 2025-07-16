@@ -1,0 +1,21 @@
+{% comment %} {% load static %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to authentication system</h1>
+    <div>
+        <form method='POST'>
+            {% csrf_token %}
+            <input type="text" placeholder="Enter your username" name='username'> 
+            <input type="password" placeholder="Enter your password" name = 'password'> 
+            <button type="submit">SignIn</button>
+        </form>
+    </div>
+</body>
+</html>
