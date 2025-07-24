@@ -60,8 +60,6 @@ class StyledFormMixin:
 
 
 # Django Model Form
-
-
 class TaskModelForm(StyledFormMixin, forms.ModelForm):
     class Meta:
         model = Task

@@ -3,6 +3,8 @@ import re
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from tasks.forms import StyledFormMixin
+from django.contrib.auth.forms import AuthenticationForm
+
 
 class RegisterForm(UserCreationForm):
     
@@ -16,7 +18,7 @@ class RegisterForm(UserCreationForm):
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
             
-class CustomRegistrationForm(forms.ModelForm):
+class CustomRegistrationForm(StyledFormMixin,forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     
@@ -63,5 +65,6 @@ class CustomRegistrationForm(forms.ModelForm):
         return cleaned_data
 
         
-    
-    
+class LoginForm(StyledFormMixin,AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

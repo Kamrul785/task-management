@@ -1,22 +1,20 @@
-{% comment %} {% load static %} {% endcomment %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <title>Document</title>
 </head>
 <body>
     <h1>Welcome to authentication system</h1>
     <div>
-        
+        {% comment %} non_field_errors {% endcomment %}
         {% if form.non_field_errors  %}
-            
             {% for error in form.non_field_errors %}
                 {{ error }}
             {% endfor %}
-                
         {% endif %}
             
         <form action="" method="POST">
