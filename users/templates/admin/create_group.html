@@ -1,0 +1,17 @@
+{% extends 'admin/dashboard.html' %}
+{% block content %}
+
+    <div class="w-1/2 mx-auto my-8 p-6 bg-gray-50 mt-4 shadow-md rounded-lg ">
+        <ul>
+            {% for message in messages %}
+                <li class="bg-green-500 text-white px-1 py-2"> {{message}} </li> 
+            {% endfor %}
+        </ul>
+        <form method="POST" >
+            {% csrf_token %}
+            {{form}}
+            <button type ='submit' class="px-2 py-1 text-white bg-blue-500 rounded-sm mt-4" >Assign Role</button>
+        </form>
+    </div>
+
+{% endblock content %}
