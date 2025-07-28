@@ -1,45 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>
-      {% block title %}
-
-      {% endblock %}
-    </title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-  </head>
-
-  <body class="p-6 bg-gray-50">
-    <div class="max-w-[1400px] mx-auto">
-      <!-- header_section -->
-      <header class="flex justify-between item-center mb-8">
-        <h1 class="text-2xl font-semibold">Dashboard</h1>
-        <div class="flex item-center gap-4">
-          <button class="p-2 rounded-full hover:bg-gray-100 relative">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-            </svg>
-          </button>
-          <button class="w-10 h-10 bg-blue-500 rounded-full text-white font-semibold">B</button>
-        </div>
-      </header>
-
-      <main class="">
-        <!-- Stats Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+{% extends 'base.html' %}
+{% block content %}
+  <div class="max-w-[1400px] mx-auto ">
+            <!-- Stats Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-8 ">
           <!-- total_task -->
           <a href="{% url 'manager_dashboard' %}?type=all">
             <div class="bg-white rounded-xl p-6 shadow-lg">
@@ -123,7 +86,5 @@
         {% block tasks %}
 
         {% endblock %}
-      </main>
-    </div>
-  </body>
-</html>
+  </div>
+{% endblock content %}

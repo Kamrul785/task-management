@@ -5,7 +5,7 @@ from tasks.models import Task
 
 
 
-@receiver(m2m_changed, sender=Task.assigned_to.through)
+@receiver(m2m_changed, sender=Task.assigned_to.through) 
 def notify_employee_on_task_creation(sender, instance, action , **kwargs):
     if action == 'post_add':
         print(instance, instance.assigned_to.all())

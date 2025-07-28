@@ -1,11 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from django.http import HttpResponse
 from tasks.forms import TaskForm,TaskModelForm, TaskDetailModelForm
-from tasks.models import Employee,Task,TaskDetail,Project
+from tasks.models import Task,TaskDetail,Project
 from datetime import date
 from django.db.models import Q , Min,Max,Count
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test , login_required ,permission_required
+from users.views import is_admin
+
 # Create your views here.
 
 def is_manager(user):
@@ -59,7 +61,7 @@ def create_task(request):
     
     if request.method == "POST":
         task_form = TaskModelForm(request.POST) # for POST
-        task_detail_form = TaskDetailModelForm(request.POST) # for POST
+        task_detail_form = TaskDetailModelForm(request.POST, request.FILES) # for POST
         if task_form.is_valid() and task_detail_form.is_valid():
             ''' For Model Form Data '''
             task = task_form.save()
@@ -98,17 +100,35 @@ def update_task(request,id):
     context = {"task_form": task_form, "task_detail_form" : task_detail_form} 
     return render(request,'dashboard/task_form.html',context)
 
+
+
+# @login_required
+# @permission_required('tasks.delete_task', login_url='no_permission')
+# def delete_task(request,id):
+#     if request.method == 'POST':
+#         task = Task.objects.get(id=id)
+#         task.delete()
+#         messages.success(request,"Task Deleted Successfully")
+#         return redirect('manager_dashboard')
+#     else:
+#         messages.error(request,"Something Went Wrong")
+#         return redirect('manager_dashboard')
+
+
+
+
 @login_required
 @permission_required('tasks.delete_task', login_url='no_permission')
-def delete_task(request,id):
+def delete_task(request, id):
     if request.method == 'POST':
-        task = Task.objects.get(id=id)
-        task.delete()
-        messages.success(request,"Task Deleted Successfully")
-        return redirect('manager_dashboard')
+        task = get_object_or_404(Task, id=id)
+        task.delete() 
+        messages.success(request, f'Task "{task.title}" deleted successfully.')
     else:
-        messages.error(request,"Something Went Wrong")
-        return redirect('manager_dashboard')
+        messages.error(request, "Invalid request method.")
+    return redirect('manager_dashboard')
+
+
 
 @login_required
 @permission_required('tasks.view_task', login_url='no_permission')
@@ -148,3 +168,28 @@ def view_task(request):
     
     return render(request,'show_task.html', {'projects':projects})
 
+@login_required
+@permission_required('tasks.view_task', login_url='no_permission')
+def task_detail(request, task_id):
+    task = Task.objects.get(id=task_id)
+    status_choices = Task.STATUS_CHOICES
+    
+    if request.method == "POST":
+        selected_status = request.POST.get('task_status')
+        print(selected_status)
+        task.status = selected_status
+        task.save()
+        messages.success(request, 'Task Status updated successfully.')
+        return redirect('task_details', task.id)
+    
+    return render(request, 'task_details.html',{'task': task, 'status_choices': status_choices})
+
+def dashboard(request):
+    if is_employee(request.user):
+        return redirect('user_dashboard')
+    elif is_manager(request.user):
+        return redirect('manager_dashboard')
+    elif is_admin(request.user):
+        return redirect('admin_dashboard')
+    
+    return redirect('no_permission')

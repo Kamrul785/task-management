@@ -3,7 +3,7 @@
 {% block tasks %}
     
 <!-- Task Table -->
-            <div class="bg-white rounded-xl shadow-lg ">
+            <div class="bg-white rounded-xl shadow-lg mb-10">
                 <div class="grid grid-cols-4 p-4 border-b border-gray-100 text-sm text-gray-500 font-semibold">
                     <div>TASK TITLE</div>
                     <div class="ms-1">PRIORITY</div>
@@ -18,13 +18,9 @@
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                             <div>
-                                <span> {{task.title}} </span>
+                                <a href="{% url 'task_details' task.id %}">{{task.title}} </a>
                             </div>
-                            <a href="{% url 'update_task' task.id %}" class="px-2 py-1 bg-green-500 rounded-md ">Edit</a>
-                            <form action="{% url 'delete_task' task.id %}" method="POST">
-                                {% csrf_token %}
-                                <button type='submit' class="px-2 py-1 bg-red-500 rounded-md ">Delete</button>
-                            </form>
+                            
                         </div>
                         <div>
                             <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm"> {{task.details.get_priority_display}} </span>
@@ -33,7 +29,7 @@
                             <div class="flex -space-x-2.5">
                                 {% for emp in task.assigned_to.all %}
                                     <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm 
-                                    border-2 border-white "> {{emp.name|slice:":2"}} </div>
+                                    border-2 border-white "> {{emp.first_name|slice:":1"}} </div>
                                 {% endfor %}
                                     
                             </div>
@@ -45,9 +41,6 @@
                     </div>
                 </div>
                 {% endfor %}
-                    
-
-
             </div>
 
 {% endblock tasks %}
