@@ -1,24 +1,39 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
-  </head>
-  <body class="bg-gray-100">
-    <div class="w-1/2 mx-auto mt-8 ">
+{% extends 'base.html' %}
+{% block title %} Create Task {% endblock title %}  
+{% block content %}
+      <div class="w-1/2 mx-auto mt-8 ">
         <div>
-            {% if message %}
-            {{ message }}
+            {% if messages %}
+              {% for message in messages %}
+                  <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-500{% endif%}"> {{message}} </div>
+              {% endfor %}
+                
             {% endif %}
         </div>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="bg-rose-600 mt-2 px-3 py-3 rounded-md text-white">Submit</button>
+            {% comment %} {{ task_form.as_p}} {% endcomment %}
+             <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Task Title</label>
+                {{task_form.title}}
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Task Description</label>
+                {{task_form.description}}
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Due Date</label>
+                {{task_form.due_date}}
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Assign To</label>
+                <div class="ms-12">
+                    {{task_form.assigned_to}}
+                </div>
+            </div> 
+            <div class="mt-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="priority">Priority</label>
+                {{task_detail_form.priority}}
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="notes">Notes</label>
+                {{task_detail_form.notes}}
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="asset">Asset</label>
+                {{task_detail_form.asset}}
+            </div>
+            <button type="submit" class="bg-rose-600 mb-4 mt-2 px-3 py-3 rounded-md text-white">Submit</button>
         </form>
     </div>
-  </body>
-</html>
+{% endblock content %}

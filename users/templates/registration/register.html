@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="w-1/2 mx-auto px-6 py-12">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-500{% endif%}"> {{message}} </div>
+            {% endfor %}
+        {% endif %}
+        {% comment %} non_field_errors {% endcomment %}
+        {% if form.non_field_errors  %}
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+            
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <p>
+                    <label for="{{field.id_for_label}}"> {{field.label}} </label>
+                    {{field}}
+                    
+                    {% if field.errors %}
+                        <ul>
+                            
+                            {% for error in field.errors %}
+                                <li> {{error}} </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </p>
+            {% endfor %}
+                
+            <button class="bg-blue-500 px-3 py-2 text-white rounded-md shadow-md mt-4" type="submit">SignUp</button>
+        </form>
+    </div>
+
+{% endblock content %}
