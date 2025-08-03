@@ -43,6 +43,7 @@ def sign_in(request):
 def sign_out(request):
     if request.method == 'POST':
         logout(request)
+        messages.success(request, 'You have been logged out successfully.')
         return redirect('sign_in')
     
 def activate_user(request, user_id, token):

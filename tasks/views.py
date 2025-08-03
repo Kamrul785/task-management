@@ -7,6 +7,18 @@ from django.db.models import Q , Min,Max,Count
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test , login_required ,permission_required
 from users.views import is_admin
+from django.views import View
+from django.utils.decorators import method_decorator
+
+# class based view example 
+class Greetings(View):
+    greetings = 'Hellow Everyone'
+    
+    def get(self,request):
+        return HttpResponse(self.greetings)
+
+
+
 
 # Create your views here.
 
@@ -102,31 +114,31 @@ def update_task(request,id):
 
 
 
-# @login_required
-# @permission_required('tasks.delete_task', login_url='no_permission')
-# def delete_task(request,id):
-#     if request.method == 'POST':
-#         task = Task.objects.get(id=id)
-#         task.delete()
-#         messages.success(request,"Task Deleted Successfully")
-#         return redirect('manager_dashboard')
-#     else:
-#         messages.error(request,"Something Went Wrong")
-#         return redirect('manager_dashboard')
-
-
-
-
 @login_required
 @permission_required('tasks.delete_task', login_url='no_permission')
-def delete_task(request, id):
+def delete_task(request,id):
     if request.method == 'POST':
-        task = get_object_or_404(Task, id=id)
-        task.delete() 
-        messages.success(request, f'Task "{task.title}" deleted successfully.')
+        task = Task.objects.get(id=id)
+        task.delete()
+        messages.success(request,"Task Deleted Successfully")
+        return redirect('manager_dashboard')
     else:
-        messages.error(request, "Invalid request method.")
-    return redirect('manager_dashboard')
+        messages.error(request,"Something Went Wrong")
+        return redirect('manager_dashboard')
+
+
+# @login_required
+# @permission_required('tasks.delete_task', login_url='no_permission')
+# def delete_task(request, id):
+#     try:
+#         task = get_object_or_404(Task, id=id)
+#         task_title = task.title
+#         if request.method == 'POST':
+#             task.delete() 
+#             messages.success(request, f'Task "{task_title}" deleted successfully.')
+#     except Exception as e:
+#         messages.error(request, f"Error deleting task: {str(e)}")
+#     return redirect('manager_dashboard')
 
 
 

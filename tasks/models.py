@@ -46,7 +46,7 @@ class TaskDetail(models.Model):
     
     task = models.OneToOneField(
         Task,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name="details"
     )
     asset = models.ImageField(upload_to='task_asset', blank=True, null=True, default='task_asset/default_img.jpg')
