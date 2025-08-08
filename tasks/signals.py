@@ -18,10 +18,10 @@ def notify_employee_on_task_creation(sender, instance, action , **kwargs):
             fail_silently=False,
         )
 
-@receiver(post_delete, sender= Task)
-def delete_associated_details(sender, instance, **kwargs):
-    if instance.details:
-        # print(isinstance)
-        instance.details.delete()
+# @receiver(post_delete, sender= Task)
+# def delete_associated_details(sender, instance, **kwargs):
+#     if instance.details:
+#         # print(isinstance)
+#         instance.details.delete()
         
-        print('Deleted Successfully')
+#         print('Deleted Successfully')
