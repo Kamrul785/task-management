@@ -7,10 +7,13 @@
             {% endfor %}
         {% endif %}
 
+
         <form method='POST'>
-            {% csrf_token %}
-            {{ form }}
+        {% csrf_token %}
+        {{ form }}
             <button class='bg-blue-400 px-3 py-2 text-white shadow-lg rounded-md mt-4 ' type='submit'>Sign In</button>
+            <a class='text-white mt-4 bg-blue-400 px-3 py-2 rounded-md inline-block' href="{% url 'password_reset' %}">Forget Password?</a>
         </form>
+       
     </div>
 {% endblock content %}

@@ -14,6 +14,41 @@
       body {
         font-family: 'Inter', sans-serif;
       }
+      @keyframes fadeIn {
+        0% { 
+          opacity: 0; 
+          transform: translateY(20px); 
+        }
+        100% { 
+          opacity: 1; 
+          transform: translateY(0); 
+        }
+      }
+      @-webkit-keyframes fadeIn {
+        0% { 
+          opacity: 0; 
+          transform: translateY(20px); 
+        }
+        100% { 
+          opacity: 1; 
+          transform: translateY(0); 
+        }
+      }
+      .animate-fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out forwards;
+        -webkit-animation: fadeIn 0.5s ease-out forwards;
+        animation-delay: 0.1s;
+        -webkit-animation-delay: 0.1s;
+      }
+      .hover-scale {
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+      }
+      .hover-scale:hover {
+        transform: scale(1.02);
+        -webkit-transform: scale(1.02);
+      }
     </style>
   </head>
   <body class="font-sans bg-gray-100">
@@ -24,9 +59,9 @@
         {% include 'non_logged_nav.html' %}
     {% endif %}
 
-    <main>
+    <main >
         {% block content %}
-
+ 
         {% endblock content %}
     </main>
 

@@ -20,7 +20,7 @@
               class="text-gray-600 hover:text-gray-800"
               >Dashboard</a
             >
-            <a href="#" class="text-gray-600 hover:text-gray-800">Tasks</a>
+            <a href="{% url 'view_task' %}" class="text-gray-600 hover:text-gray-800">Tasks</a>
             <a href="{% url 'group_list' %}" class="text-gray-600 hover:text-gray-800"
               >Groups</a
             >
@@ -51,7 +51,12 @@
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >Dashboard</a
                 >
-                <form method="post" action="{% url 'sign_out' %}">
+                <a
+                  href="{% url 'profile' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Profile</a
+                >
+                <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                   <button
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
